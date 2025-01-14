@@ -1,0 +1,84 @@
+ App-clubs
+
+||||||||| Pour DEMARAGE
+Didcovery
+Config
+Gateway ***
+Customer
+Inventory
+Reserv
+
+
+
+----------------------------------------------------------------------
+        <version>3.4.0</version>
+--------------------------
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+|||||||||||||||||||||||||||||||||||Gateway
+server:
+  port: 8888
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    discovery:
+      enabled: true
+    gateway:
+        routes:
+          - id: r1
+            uri: http://localhost:8090
+            predicates:
+              - Path= /customers/**
+------------------------------------------
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-gateway</artifactId>
+		</dependency>
+
+||||||||||||||||||||||||||||||||||||| ReservService
+Open Feign --> Model Declaratif (ex: les annotations) --> fremwork cree un client Rest 
+
+
+|||||||||||||||||||||||||||||||||| ADD TO MICRO-SERVICE
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-config</artifactId>
+</dependency>
+------------------------and
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+eureka.instance.prefer-ip-address=true
+
+spring.cloud.config.enabled=true
+spring.data.rest.base-path=/api
+
+---------------------And update a Chaud
+- management.endpoints.web.exposure.include=*  || * --> health refresh 
+- @RefreshScope
+- POST http://localhost:8090/actuator/refresh
+---------------------Config.properties
+sur Config-service -->
+spring.cloud.config.server.git.uri=https://github.com/oumaimamar/config-club-app
+
+
+
+
+||||||||||||||||||||||||| Tools
+tool --> Http Client --> Create .. . or Postman
+
+
+
