@@ -21,10 +21,9 @@ public class Reserv {
     private Date reservDate;
     private Long customerId;
 
+
     @OneToMany(mappedBy = "reserv")
     private List<TerrainItem> terrainItems;
-
     @Transient
     private Customer customer;
-
 }

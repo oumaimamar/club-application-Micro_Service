@@ -80,5 +80,11 @@ spring.cloud.config.server.git.uri=https://github.com/oumaimamar/config-club-app
 ||||||||||||||||||||||||| Tools
 tool --> Http Client --> Create .. . or Postman
 
+|||||||||||||||||||||||||Test
+
+http://localhost:8091/clubs/2222/terrains
+http://localhost:8091/clubsByVille?ville=FES
+http://localhost:8091/terrainsByType?type=Football
+
 
 

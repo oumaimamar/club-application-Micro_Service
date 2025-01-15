@@ -34,26 +34,39 @@ public class ReservServiceApplication {
                                    CustomerRestClient customerRestClient,
                                    TerrainRestClient terrainRestClient) {
         return args -> {
-            Collection<Terrain> terrains=terrainRestClient.allTerrains().getContent();
-            Long customerId=1L;
-            Customer customer= customerRestClient.findCustomerById(customerId);
-            if(customer == null) throw new RuntimeException("Customer not found");
-            Reserv reserv=new Reserv();
+            // Récupération de tous les terrains
+            List<Terrain> terrains = terrainRestClient.allTerrains();
+            if (terrains == null || terrains.isEmpty()) {
+                throw new RuntimeException("No terrains found from INVENTORY-SERVICE");
+            }
+
+            // ID d'un client (modifiable selon vos besoins)
+            Long customerId = 1L;
+
+            // Vérification de l'existence du client
+            Customer customer = customerRestClient.findCustomerById(customerId);
+            if (customer == null) {
+                throw new RuntimeException("Customer not found with ID: " + customerId);
+            }
+
+            // Création et sauvegarde de la réservation
+            Reserv reserv = new Reserv();
             reserv.setReservDate(new Date());
             reserv.setCustomerId(customerId);
             Reserv savedReserv = reservRepository.save(reserv);
 
-            terrains.forEach(terrain->{
-                TerrainItem terrainItem=new TerrainItem();
+            // Association des terrains à la réservation
+            terrains.forEach(terrain -> {
+                TerrainItem terrainItem = new TerrainItem();
                 terrainItem.setReserv(savedReserv);
                 terrainItem.setTerrainId(terrain.getId());
-                terrainItem.setNbPersons(1+new Random().nextInt(10));
-                terrainItem.setType(TerrainType.Basketball);
-                terrainItem.setDiscount(Math.random());
+                terrainItem.setNbPersons(1 + new Random().nextInt(10));
+                terrainItem.setType(TerrainType.Basketball); // Modifier si nécessaire
+                terrainItem.setDiscount(Math.random()); // Génération d'un discount aléatoire
                 terrainItemRepository.save(terrainItem);
-
             });
 
+            System.out.println("Reservation initialized with terrains and customer data.");
         };
     }
 
