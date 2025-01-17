@@ -23,6 +23,9 @@ public class Terrain {
     private int nbPersons;
 
     @ManyToOne
-    @JsonBackReference // Child side of the relationship
+
     private Club club;
+
+
+    
 }

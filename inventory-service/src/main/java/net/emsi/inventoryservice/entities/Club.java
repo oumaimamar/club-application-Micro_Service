@@ -1,6 +1,7 @@
 package net.emsi.inventoryservice.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,7 +23,7 @@ public class Club {
     private ClubVille ville;
 
     @OneToMany(mappedBy = "club")
-    @JsonManagedReference // Parent side of the relationship
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Terrain> terrains;
 
 

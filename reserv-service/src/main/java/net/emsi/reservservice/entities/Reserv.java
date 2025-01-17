@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.emsi.reservservice.model.Customer;
+import net.emsi.reservservice.model.Terrain;
 
 import java.util.Date;
 import java.util.List;
@@ -21,9 +22,16 @@ public class Reserv {
     private Date reservDate;
     private Long customerId;
 
+    private Long terrainId;
 
-    @OneToMany(mappedBy = "reserv")
-    private List<TerrainItem> terrainItems;
+    @Enumerated(EnumType.STRING)
+    private TerrainType type;
+
+//    @OneToMany(mappedBy = "reserv")
+//    private List<TerrainItem> terrainItems;
+
     @Transient
     private Customer customer;
+    @Transient
+    private Terrain terrain;
 }

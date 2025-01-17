@@ -1,4 +1,9 @@
- App-clubs
+Note club-application 
+
+---> C:\Users\Oumaima\Downloads\git_prof_student\club-application
+
+A voir --->  https://youtu.be/oTuAXfD2M1g
+
 
 ||||||||| Pour DEMARAGE
 Didcovery
@@ -29,6 +34,8 @@ Reserv
             </plugin>
         </plugins>
     </build>
+
+
 |||||||||||||||||||||||||||||||||||Gateway
 server:
   port: 8888
@@ -49,9 +56,14 @@ spring:
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+
 
 ||||||||||||||||||||||||||||||||||||| ReservService
 Open Feign --> Model Declaratif (ex: les annotations) --> fremwork cree un client Rest 
+
+----------------------------------------------------------------------------------------
 
 
 |||||||||||||||||||||||||||||||||| ADD TO MICRO-SERVICE
@@ -74,7 +86,7 @@ spring.data.rest.base-path=/api
 sur Config-service -->
 spring.cloud.config.server.git.uri=https://github.com/oumaimamar/config-club-app
 
-
+----------------------------------------------------------------------------------------
 
 
 ||||||||||||||||||||||||| Tools
@@ -85,6 +97,31 @@ tool --> Http Client --> Create .. . or Postman
 http://localhost:8091/clubs/2222/terrains
 http://localhost:8091/clubsByVille?ville=FES
 http://localhost:8091/terrainsByType?type=Football
+----------------------------------------------------------------
+
+
+||||||||||||||||||||||| LES PROBLEMS
+-------------http://localhost:8091/swagger-ui/index.html -- video YouTube --> https://youtu.be/oTuAXfD2M1g?t=2280
+Fetch error
+response status is 500 /v3/api-docs
+
++++++++++++++ soit @RepositoryRestResource  Il genere par default un webService      
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-rest</artifactId>
+        </dependency>
+
+++++++++++++ OR 
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+
 
 
 

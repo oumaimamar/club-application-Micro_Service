@@ -14,6 +14,4 @@ public class Terrain {
     private TerrainType type;
     private int nbPersons;
 
-    private String clubName;
-
 }
