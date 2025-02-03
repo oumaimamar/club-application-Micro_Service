@@ -67,8 +67,8 @@ public class ClubRestController {
 
     //Add new terrain declare METHODE_2
     @PostMapping(path="/terrains")
-    public Terrain createNewTerrain( String name, TerrainType type,TerrainStatus status,int nbPerson ,Long clubId) throws IOException {
-        return terrainService.createNewTerrain(name, type, status, nbPerson, clubId);
+    public Terrain createNewTerrain( NewTerrainDTO newTerrainDTO) throws IOException {
+        return terrainService.createNewTerrain(newTerrainDTO);
     }
 
     @PutMapping("terrains/{id}")

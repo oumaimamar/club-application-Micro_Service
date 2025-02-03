@@ -13,4 +13,7 @@ public interface TerrainRepository extends JpaRepository<Terrain, Long> {
     List<Terrain> findByClubCode(String code);
     List<Terrain> findByStatus(TerrainStatus status);
     List<Terrain> findByType(TerrainType type);
+
+
+
 }

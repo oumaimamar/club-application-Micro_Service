@@ -41,18 +41,18 @@ public class TerrainService {
 //    }
 
     // Create a new terrain METHODE_2
-    public Terrain createNewTerrain(String name, TerrainType type,TerrainStatus status,int nbPerson ,Long clubId) {
+    public Terrain createNewTerrain(NewTerrainDTO newTerrainDTO) {
         // Check if the provided club exists
-        Club club = clubRepository.findById(clubId)
-                .orElseThrow(() -> new RuntimeException("Club not found with ID: " + clubId));
+        Club club = clubRepository.findById(newTerrainDTO.getClubId())
+                .orElseThrow(() -> new RuntimeException("Club not found with ID: " + newTerrainDTO.getClubId()));
 
         // Create a new terrain
         Terrain terrain = Terrain.builder()
-                .name(name)
-                .type(type)
-                .status(status)
+                .name(newTerrainDTO.getName())
+                .type(newTerrainDTO.getType())
+                .status(newTerrainDTO.getStatus())
                 .club(club)
-                .nbPersons(nbPerson)
+                .nbPersons(newTerrainDTO.getNbPersons())
                 .build(); // Associate with the club
         return terrainRepository.save(terrain); // Save and return the terrain
     }

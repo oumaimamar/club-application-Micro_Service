@@ -121,6 +121,18 @@ response status is 500 /v3/api-docs
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
 
+|||||||||||||||||||||- Pagination |||||||||||||||||||
+     <mat-paginator [pageSizeOptions]="[5, 10, 20, 30, 100]"showFirstLastButtons>
+      </mat-paginator>
+
+  dataSource!: MatTableDataSource<any>;
+  @ViewChild(MatPaginator) paginator! : MatPaginator;
+----------------------
+        this.dataSource = new MatTableDataSource(this.terrains);
+        this.dataSource.paginator = this.paginator; // Connect paginator to data source
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
 
 
 
