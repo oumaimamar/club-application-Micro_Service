@@ -1,5 +1,6 @@
 package net.emsi.reservservice.services;
 
+import net.emsi.reservservice.model.Club;
 import net.emsi.reservservice.model.Terrain;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.hateoas.PagedModel;
@@ -10,9 +11,15 @@ import java.util.List;
 
 @FeignClient(name = "INVENTORY-SERVICE")
 public interface TerrainRestClient {
+
     @GetMapping(path = "/terrains/{id}")
-    public Terrain findTerrainById(@PathVariable Long id);
+    Terrain findTerrainById(@PathVariable Long id);
 
     @GetMapping(path = "/terrains")
     List<Terrain> allTerrains();
+
+
+    @GetMapping(path = "/clubs")
+    List<Club> allClubs(); // Fetch all clubs
+
 }

@@ -5,13 +5,12 @@ import net.emsi.inventoryservice.entities.*;
 import net.emsi.inventoryservice.repository.ClubRepository;
 import net.emsi.inventoryservice.repository.TerrainRepository;
 import net.emsi.inventoryservice.services.TerrainService;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -33,10 +32,10 @@ public class ClubRestController {
         return clubRepository.findAll();
     }
 
-    @GetMapping("/clubs/{code}")
-    public Club getClubByCode(@PathVariable String code){
-        return clubRepository.findByCode(code);
-    }
+//    @GetMapping("/clubs/{code}")
+//    public Club getClubByCode(@PathVariable String code){
+//        return clubRepository.findByCode(code);
+//    }
     @GetMapping("/clubsByVille")
     public List<Club> clubsByVille(@RequestParam ClubVille ville){return clubRepository.findByVille(ville);}
 
@@ -49,8 +48,25 @@ public class ClubRestController {
         return terrainRepository.findById(id).get();
     }
 
-    @GetMapping("/clubs/{code}/terrains")
-    public List<Terrain> terrainsByClubCode(@PathVariable String code){return terrainRepository.findByClubCode(code);}
+//    @GetMapping("/clubs/{code}/terrains")
+//    public List<Terrain> terrainsByClubCode(@PathVariable String code){return terrainRepository.findByClubCode(code);}
+
+
+
+
+    @GetMapping("/clubs/{id}")
+    public Club getClubsById(@PathVariable Long id){
+        return clubRepository.findById(id).get();
+    }
+
+    @GetMapping("/clubs/{id}/terrains")
+    public List<Terrain> terrainsByClubId(@PathVariable Long id){return clubRepository.findById(id).get().getTerrains();}
+
+
+
+
+
+
 
     @GetMapping("/terrainsByType")
     public List<Terrain> terrainsByType(@RequestParam TerrainType type){return terrainRepository.findByType(type);}

@@ -22,10 +22,10 @@ public class Terrain {
     private TerrainStatus status;
     private int nbPersons;
 
-    @ManyToOne
-
+    @ManyToOne(fetch = FetchType.EAGER) // Ensure club is fetched when terrain is fetched
     private Club club;
 
 
-    
+
+
 }

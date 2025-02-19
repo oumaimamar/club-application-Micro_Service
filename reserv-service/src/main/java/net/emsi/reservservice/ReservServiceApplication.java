@@ -1,6 +1,7 @@
 package net.emsi.reservservice;
 
 import net.emsi.reservservice.entities.Reserv;
+import net.emsi.reservservice.model.Club;
 import net.emsi.reservservice.model.Customer;
 import net.emsi.reservservice.model.Terrain;
 import net.emsi.reservservice.repository.ReservRepository;
@@ -29,40 +30,51 @@ public class ReservServiceApplication {
                                    CustomerRestClient customerRestClient,
                                    TerrainRestClient terrainRestClient) {
         return args -> {
-            // IDs des clients et terrains à utiliser
-            List<Long> customerIds = List.of(1L, 2L, 3L); // Exemple d'IDs de clients
+
+            List<Long> customerIds = List.of(1L, 2L, 3L);
+
+            // Fetch all clubs and terrains
+            List<Club> clubs = terrainRestClient.allClubs();
             List<Terrain> terrains = terrainRestClient.allTerrains();
 
             if (terrains.isEmpty()) {
                 throw new RuntimeException("No terrains found from INVENTORY-SERVICE");
             }
 
-            // Créer 3 réservations
+            if (clubs.isEmpty()) {
+                throw new RuntimeException("No clubs found from INVENTORY-SERVICE");
+            }
+
             for (int i = 0; i < 3; i++) {
-                // Sélectionner un client et un terrain aléatoire
+                // Select a random customer and terrain
                 Long customerId = customerIds.get(new Random().nextInt(customerIds.size()));
                 Terrain terrain = terrains.get(new Random().nextInt(terrains.size()));
-
-                // Vérifier l'existence du client
                 Customer customer = customerRestClient.findCustomerById(customerId);
+
                 if (customer == null) {
                     System.out.println("Customer not found with ID: " + customerId);
-                    continue; // Passer à la réservation suivante
+                    continue; // Skip to the next reservation
                 }
 
-                // Vérifier l'existence du terrain
                 if (terrain == null) {
                     System.out.println("Terrain not found");
-                    continue; // Passer à la réservation suivante
+                    continue; // Skip to the next reservation
                 }
 
-                // Créer et sauvegarder la réservation
+                // Create and save the reservation
                 Reserv reserv = new Reserv();
                 reserv.setReservDate(new Date());
                 reserv.setCustomerId(customerId);
                 reserv.setTerrainId(terrain.getId());
                 reserv.setType(terrain.getType());
 
+                // Fetch the club name from the terrain's associated club (only set once)
+                String clubName = (terrain.getClub() != null && terrain.getClub().getName() != null)
+                        ? terrain.getClub().getName()
+                        : "Unknown Club";  // Default to "Unknown Club" if null
+                reserv.setClubName(clubName);
+
+                // Save the reservation to the repository
                 Reserv savedReserv = reservRepository.save(reserv);
 
                 System.out.println("Reservation created:");
@@ -71,9 +83,14 @@ public class ReservServiceApplication {
                 System.out.println("Customer ID: " + savedReserv.getCustomerId());
                 System.out.println("Terrain ID: " + savedReserv.getTerrainId());
                 System.out.println("Terrain Type: " + savedReserv.getType());
+                System.out.println("Club Name: " + savedReserv.getClubName());
             }
         };
     }
+
+
+
+
 
 
 }

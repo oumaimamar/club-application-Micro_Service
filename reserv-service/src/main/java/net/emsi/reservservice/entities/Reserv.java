@@ -21,17 +21,18 @@ public class Reserv {
     private Long id;
     private Date reservDate;
     private Long customerId;
-
     private Long terrainId;
 
     @Enumerated(EnumType.STRING)
     private TerrainType type;
 
-//    @OneToMany(mappedBy = "reserv")
-//    private List<TerrainItem> terrainItems;
-
     @Transient
     private Customer customer;
+
     @Transient
     private Terrain terrain;
+
+    @Transient
+    private String clubName; // New field for club name
 }
+
